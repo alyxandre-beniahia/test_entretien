@@ -1,5 +1,7 @@
 # Authentication App
 
+A simple authentication app built with Node.js, Express, MongoDB React.
+
 ## Installation
 
 Clone the repository:
