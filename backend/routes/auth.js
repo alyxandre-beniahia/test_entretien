@@ -88,9 +88,9 @@ router.get("/me", authMiddleware, async (req, res) => {
 
 router.put("/me", async (req, res) => {
   try {
-    const { username, email, password, newPassword, bio } = req.body;
+    const { username, email, password, newPassword, bio, id } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findById(id);
     console.log(user);
 
     if (newPassword) {
@@ -113,6 +113,7 @@ router.put("/me", async (req, res) => {
     await user.save();
 
     res.json({ msg: "Profile updated successfully" });
+    console.log(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

@@ -30,7 +30,7 @@ const LoginPage = () => {
         alert('Login failed');
       }
     } catch (error) {
-      console.error('Error during login:', error);
+      alert('Login failed');
     }
   };
 

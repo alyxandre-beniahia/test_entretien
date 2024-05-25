@@ -9,24 +9,41 @@ const RegisterPage = () => {
     password: '',
     confirmPassword: '',
   });
+  const [passwordMatchError, setPasswordMatchError] = useState('');
 
   const { username, email, password, confirmPassword } = formData;
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    const updatedFormData = { ...formData, [name]: value };
+
+    if (name === 'password' || name === 'confirmPassword') {
+      const { password, confirmPassword } = updatedFormData;
+      if (password !== confirmPassword) {
+        setPasswordMatchError('Passwords do not match');
+      } else {
+        setPasswordMatchError('');
+      }
+    }
+
+    setFormData(updatedFormData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setPasswordMatchError('Passwords do not match');
+      return;
+    }
     try {
       const res = await axios.post('http://localhost:5000/api/register', formData);
-      console.log(res)
+      console.log(res);
 
       if (res.data.token) {
         alert('Registration successful');
-        navigate('/login'); 
+        navigate('/login');
       } else {
         console.error('Registration failed');
       }
@@ -94,6 +111,7 @@ const RegisterPage = () => {
             onChange={handleChange}
             placeholder="Confirm your password"
           />
+          {passwordMatchError && <div className="text-danger">{passwordMatchError}</div>}
         </div>
         <button type="submit" className="btn btn-primary">
           Register

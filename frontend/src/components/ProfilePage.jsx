@@ -15,7 +15,7 @@ const ProfilePage = () => {
 
   const navigate = useNavigate()
 
-  const { username, email, password, newPassword, bio } = formData;
+  const { username, email, password, newPassword, bio, id } = formData;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -54,7 +54,7 @@ const ProfilePage = () => {
 
       alert('Profile updated successfully:');
     } catch (error) {
-      console.error('Error updating profile:', error);
+      alert('Error updating profile, wrong password:', error);
     }
   };
 
